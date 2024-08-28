@@ -38,9 +38,12 @@ function addToCart(productId) {
     if (!product) return;
 
     const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
-    const existingProduct = cart.find(item => item.id === productId);
+    
+    // Check if the product is already in the cart
+    const existingProductIndex = cart.findIndex(item => item.id === productId);
 
-    if (!existingProduct) {
+    if (existingProductIndex === -1) {
+        // Add product if not already in the cart
         cart.push(product);
         sessionStorage.setItem("cart", JSON.stringify(cart));
         renderCart();
